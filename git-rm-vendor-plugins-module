@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# To remove a rails git submodule from vendor/plugins:
+#   cd RAILS_ROOT
+#   Delete module from .gitmodules and .git/config
+#   git rm --cached vendor/plugins/foo
+#   rm -rf vendor/plugins/foo
+#
+# See http://pitupepito.homelinux.org/?p=24
+
+git rm --cached vendor/plugins/$1
+rm -rf vendor/plugins/$1
