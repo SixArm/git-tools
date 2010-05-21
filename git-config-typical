@@ -1,0 +1,3 @@
+git config branch.master.merge refs/heads/master
+git config branch.master.remote origin
+git config push.default matching

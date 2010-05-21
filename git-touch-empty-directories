@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Git will skip empty directories, which is efficient but may be confusing.
+# To solve this, we touch a .gitgnore file in each empty directory.
+#
+# Example:
+#   git-touch-empty-directories /foo/bar
+#
+# Credit to Nick Poulden - http://www.midlandswebdesign.com
+# See http://groups.google.com/group/rails-oceania/browse_thread/thread/2c8611dc93917952/e175f72310823547?pli=1
+##
+
+find $1 \( -type d -empty \) -and \( -not -regex ./\.git.* \) -exec touch {}/.gitignore \;

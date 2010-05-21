@@ -1,0 +1,28 @@
+How to speed up your git deployment by using git clone mirror 
+and git fetch to deploy a new release to a new datestamp directory.
+
+Optimized git deployment:
+
+  # Initialize a git mirror directory; do this once
+  git clone --mirror $repository $repository_mirror_path 
+
+  # Deploy a new release: fetch updates then put them in a new directory
+  git --git-dir=$repository_mirror_path fetch $repository 
+  mkdir $release_path && cd $release_path && git --git-dir=$repository_mirror_path --work-tree=. reset --hard $branch
+
+Example:
+
+  # Initialize a git repository from an existing github project
+  git --git-dir=/apps/myproject/mirror fetch git@github.com:myuser/myproject.git
+
+  # Deploy iteration 4 branch to a datestamped directory suitable for running tests
+  git clone --mirror git@github.com:myuser/myproject.git /apps/myproject/mirror
+  dir=/apps/myproject/`datestamp` && mkdir $dir && cd $dir && git --git-dir=/apps/myproject/mirror --work-tree=. reset --hard iteration4
+
+== Notes
+
+This script uses the 'datestamp' command, 
+which is identical to using this command:
+  date -u +%Y%m%d%H%M%S
+
+

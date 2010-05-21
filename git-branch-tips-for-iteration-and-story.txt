@@ -1,0 +1,58 @@
+
+== Git Iteration Branch Commands
+
+For this example suppose:
+- you have github iteration branches i1, i2, i3
+- you want to create a new github iteration branch i4
+
+Update:
+  git checkout i3  (the latest branch)
+  git pull
+
+Create:
+  git checkout -b i4
+  git submodule init
+  git submodule update
+  git push origin i4  (push the new branch to github)
+
+Track:
+  git checkout i3   (you must be on a non-new branch to do the next command)
+  git branch --track -f i4 origin/i4
+  git checkout i4
+
+Deploy using a custom Capistrano deploy cold task:
+  cap staging deploy:cold 
+
+
+== Git Story Branch Rebase Merge Commands
+
+For this example suppose:
+- You have an iteration branch "i4" on github
+- You want to create a story branch "foo" from "i4" on github
+
+
+git pull
+git checkout -b i4-foo
+# ...work and commit...
+
+# optionally push to github and track
+git push origin i4-foo
+git checkout i4
+git branch --track -f i4-foo origin/i4-foo 
+git checkout i4-foo
+
+To rebase & merge your stuff back into the iteration branch:
+  git checkout i4
+  git pull
+  git checkout i4-foo
+  git rebase i4
+  ...repeat above until pull is clean
+  git checkout i4
+  git merge i4-foo  # should be clean, as all conflicts are already resolved
+  git push
+
+To delete story branch from github:
+  git branch -D i4-foo
+  git push origin :i4-foo (notice the colon!)
+
+
