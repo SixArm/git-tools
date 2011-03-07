@@ -1,0 +1,13 @@
+To flatten a repo to depth 1:
+
+  git checkout master  # go to latest
+  git checkout -b tmp # new branch
+  git reset abc123def456  # put all content into working files. use hash of repo's first commit
+  git add . 
+  git commit -m 'start over' # put into repo as one commit
+  git checkout master # go back
+  git reset —hard tmp # set to commit in new branch
+  git branch -D tmp # toss tmp branch
+
+When you push to master you'll have to use flag to force non-fast-forward push, since it's destructive.
+

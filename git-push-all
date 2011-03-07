@@ -2,17 +2,7 @@
 
 for dir in *
 do
-  echo "==="
-  echo $dir
   cd $dir 
-  [ -e README ] && git add README
-  [ -e README.rdoc ] && git add README.rdoc
-  [ -e LICENSE.txt ] && git add LICENSE.txt
-  [ -e *.gem ] && git add *.gem
-  [ -e .sha256.txt ] && rm .sha256.txt
-  git pull
-  git commit -am "$1"
   git push
-  git status
   cd -
 done
