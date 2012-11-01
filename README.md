@@ -20,7 +20,7 @@ Find all git directories within the current directory and iterate:
 
   * <code>git-gc-all</code>: garbage collect
   * <code>git-get-all</code>: pull and submodule init and update recursively
-  * <code>git-push-all</code>: pull
+  * <code>git-pull-all</code>: pull
   * <code>git-push-all</code>: push
   * <code>git-status-all</code>: status
 
