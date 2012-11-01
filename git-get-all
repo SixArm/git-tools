@@ -1,0 +1,1 @@
+find . -type d -name .git -exec git --git-dir={} pull \; --exec git --git-dir={} submodule update --init --recursive 
