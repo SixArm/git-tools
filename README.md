@@ -2,7 +2,7 @@
 
 Most frequent commands:
 
-  * <code>git-branch-current: print the current git branch, suitable for using in other scripts.
+  * <code>git-branch-current</code>: print the current git branch, suitable for using in other scripts.
   * <code>git-keep-empty-directories</code>: touch a .gitkeep file in each empty directory.
   * <code>git-meld</code>: use meld to compare git diffs.
 
