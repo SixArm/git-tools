@@ -1,6 +1,0 @@
-To remove a git submodule:
-
- cd RAILS_ROOT
- Delete module from .gitmodules and .git/config
- git rm --cached vendor/plugins/foo
- rm -rf vendor/plugins/foo

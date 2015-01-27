@@ -1,0 +1,36 @@
+#!/bin/bash
+set -eufx -o pipefail
+
+##
+# Git script to remove a git submodule by name and optional path.
+#
+# Syntax:
+#
+#     git-submodule-remove <name> [path]
+#
+# Example:
+#
+#     git-submodule-remove MySubModName
+#
+# Example with submodule name and different submodule path:
+#
+#     git-submodule MySubModName vendor/my-sub-mod-path
+#
+# The script does this:
+#
+#   * Removes the submodule `foo` section from .gitmodules and .git/config
+#   * Removes the directory `.git/config/foo` and the submodule path.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
+submodule_name=$1
+submodule_path=${2:$submodule_name}
+echo "git submodule name:$submodule_name path:$submodule_path"
+exit 0
+git config -f .gitmodules --remove-section "submodule.$submodule_name"
+git config -f .git/config --remove-section "submodule.$submodule_name"
+rm -rf ".git/modules/$submodule_name"
+git rm --cached "$submodule_path"
