@@ -1,9 +1,0 @@
-#!/bin/sh
-
-for dir in *
-do
-  echo $dir
-  cd $dir 
-  git status
-  cd -
-done
