@@ -29,7 +29,8 @@
 #   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 
-# The path variable is where we find; the default the current directory.
+# The path variable for the `find` command.
+# The default is the current directory `.`.
 path="${1:-.}"
 shift
 
