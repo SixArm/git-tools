@@ -3,6 +3,7 @@
 Most frequent commands:
 
   * <code>git-branch-current</code>: print the current git branch, suitable for using in other scripts.
+  * <code>git-repos</code>: find all the git repos in a a given path or the current directory.
   * <code>git-keep-empty-directories</code>: touch a .gitkeep file in each empty directory.
   * <code>git-meld</code>: use meld to compare git diffs.
 
