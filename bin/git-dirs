@@ -1,38 +1,43 @@
 #!/bin/sh
 
 ##
-# Find git directories and optionally execute commands.
+# Find git directories, and optionally use them to execute commands.
 #
 # Syntax:
 #
 #     git-dirs [[path] commands]
 #
-# Example to find all git dirs in the current directory:
+# Example to find all git directories within the current path:
 #
 #     git-dirs  
 #
-# Example to find all git dirs in a given directors:
+# Example to find all git directories within a specific path:
 #
 #     git-dirs /foo/goo
 #
-# Example to run the status command:
+# Example find all git directories then run a status command:
 #
 #     git-dirs /foo/goo status
 #    
 # Tracking:
 #
 #   * Command: git-dirs
-#   * Version: 1.0.0
+#   * Version: 1.0.1
 #   * Created: 2017-08-26
 #   * Updated: 2017-08-26
 #   * License: GPL
 #   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 
-path="${1:-.}"; shift
+# The path variable is where we find; the default the current directory.
+path="${1:-.}"
+shift
+
+# Are there any more args?
 if [ $# -eq 0 ] ; then
+  # If there are no args, then print each directory name
   find "$path" -name '.git' -type d -exec dirname "{}" \;
 else
+  # If there are args, then use each directory to run commands
   find "$path" -name '.git' -type d -exec git -C "{}/.." "$@" \;
 fi
-
