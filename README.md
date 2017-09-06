@@ -16,7 +16,6 @@ Multiple directory commands:
   * <code>[git-dirs](bin/git-dirs)</code>: find git directories, and optionally use them to run git commands.
   * <code>[git-repo-summaries](bin/git-repo-summaries)</code>: accumulate a TSV output of git repo summaries for our projects.
 
-
 Submodules:
 
   * <code>[git-rm-vendor-plugins-module](bin/git-rm-vendor-plugins-module)</code>: remove a rails git submodule from vendor/plugins and cache.
