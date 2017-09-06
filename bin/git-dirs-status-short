@@ -30,4 +30,4 @@
 # The default is the current directory `.`.
 path="${1:-.}"
 
-find "$path" -s -name '.git' -type d -exec dirname "{}" \; -exec git -C "{}/.." status --short \;
+find -s "$path" -name '.git' -type d -exec dirname "{}" \; -exec git -C "{}/.." status --short \;

@@ -37,8 +37,8 @@ shift
 # Are there any more args?
 if [ $# -eq 0 ] ; then
   # If there are no args, then print each directory name
-  find "$path" -s -name '.git' -type d -exec dirname "{}" \;
+  find -s "$path" -s -name '.git' -type d -exec dirname "{}" \;
 else
   # If there are args, then use each directory to run commands
-  find "$path" -s -name '.git' -type d -exec git -C "{}/.." "$@" \;
+  find -s "$path" -s -name '.git' -type d -exec git -C "{}/.." "$@" \;
 fi
