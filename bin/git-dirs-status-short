@@ -1,0 +1,33 @@
+#!/bin/sh
+
+##
+# Find git directories, and print the `git status --short` info.
+#
+# Syntax:
+#
+#     git-dirs-status-short [path]
+#
+# Example for all git directories within the current path:
+#
+#     git-dirs-status-short
+#
+# Example for all git directories within a specific path:
+#
+#     git-dirs-status-short /foo/goo
+#
+#
+# Tracking:
+#
+#   * Command: git-dirs-status-short
+#   * Version: 1.0.1
+#   * Created: 2017-08-26
+#   * Updated: 2017-09-06
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+# The path variable for the `find` command.
+# The default is the current directory `.`.
+path="${1:-.}"
+
+find "$path" -s -name '.git' -type d -exec dirname "{}" \; -exec git -C "{}/.." status --short \;
