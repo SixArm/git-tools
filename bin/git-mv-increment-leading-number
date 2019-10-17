@@ -1,0 +1,6 @@
+while read basename; do
+	base=$(printf '%s' "$basename" | sed 's/^[[:digit:]]*//g')
+	x=$(printf '%s' "$basename" | sed 's/[^[:digit:]].*//g')
+	y=$(($x + 1))
+	git mv $x$base $y$base
+done
