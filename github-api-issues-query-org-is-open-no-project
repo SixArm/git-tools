@@ -1,0 +1,25 @@
+#!/bin/sh
+
+##
+# Fetch all GitHub issues that are:
+#
+#   * within a given organization
+#   * open
+#   * not associated with a project board
+#
+# Setup:
+#
+#     export USER="alice"
+#     export TOKEN="ead61559becfe174575ea6a3595dec5ebb399bd4"
+#     export ORG="myorganization"
+#
+# Preflight:
+#
+#     curl -u "$USER:$TOKEN" "https://api.github.com/"
+#
+#     curl - "$USER:$TOKEN" "https://api.github.com/orgs/$ORG/repos" | jq -r '.[].full_name'
+##
+curl --silent --show-error -u "$USER:$TOKEN" \
+"https://api.github.com/search/issues?q=org:$ORG+no%3Aproject+type%3Aissue+is%3Aopen" |
+q -r '.items[].url' |
+cut -c 30-
