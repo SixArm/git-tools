@@ -1,0 +1,44 @@
+#!/bin/sh
+set -euf
+
+## sixarm-unix-shell-functions
+out() { printf %s\\n "$*" ; }
+err() { >&2 printf %s\\n "$*" ; }
+die() { >&2 printf %s\\n "$*" ; exit 1 ; }
+pushdx() { command pushd "$@" > /dev/null ; }
+popdx() { command popd "$@" > /dev/null ; }
+
+update_git_repo(){
+    git pull --ff-only > /dev/null
+    git submodule update --init --recursive > /dev/null
+}
+
+vet_git_repo(){
+    test -x init || out "Suggestion: create executable file \"init\" in order for a new user to initialize the project."
+    test -f CODEOWNERS || out "Suggestion: create file \"CODEOWNERS\" in order to protect the repo from non-owners."
+    test -f .config || out "Suggestion: create directory \".config\" for repo configration files."
+    set +f
+    test -f LICENSE* && grep -q "GNU GENERAL PUBLIC LICENSE" LICENSE* && grep -q "Version 3, 29 June 2007" LICENSE && out "Suggestion: change license from GPL 3 to GPL 2 because it's better for more open source systemss."
+    set -f
+    for x in \
+	    README \
+	    LICENSE \
+	    CONTRIBUTING \
+	    CODE_OF_CONDUCT \
+	    .config/ISSUE_TEMPLATE \
+	    .config/PULL_REQUEST_TEMPLATE \
+	    .config/SECURITY
+    do
+	set +f
+	test -f $x* || out "Suggestion: create metadata file \"$x\" (or $x.md or $x.txt etc.)"
+	set -f
+    done
+}
+
+while read git_repo_path; do
+    out "$git_repo_path"
+    pushdx "$git_repo_path"
+    update_git_repo
+    vet_git_repo
+    popdx
+done
