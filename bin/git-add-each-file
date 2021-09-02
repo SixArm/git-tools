@@ -1,0 +1,2 @@
+git ls-files --others --exclude-standard | 
+while read x; do git a "$x"; git cm "Add $x"; done
