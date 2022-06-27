@@ -1,0 +1,21 @@
+#!/bin/sh
+set -euf
+
+github_api_from_user_to_repos() {
+	curl -s "https://api.github.com/users/$1/repos?per_page=9999"
+}
+
+github_api_from_user_to_repos_to_ssh_url_list() {
+	github_api_from_user_to_repos "$user" |
+	jq -r '.[].ssh_url'
+}
+
+for user in "$@"; do
+	do_user "$user"
+done
+
+
+do_user() {
+	user="$1"
+	github_api_from_user_to_repos_to_ssh_url_list "$user"
+}
