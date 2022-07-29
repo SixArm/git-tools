@@ -1,4 +1,4 @@
-# SixArm.com → Git → scripts for version control
+# Git scripts for version control
 
 Most popular:
 
