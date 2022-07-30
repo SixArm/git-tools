@@ -1,4 +1,4 @@
-# Git scripts for version control
+# Git tools for version control
 
 Most popular:
 
