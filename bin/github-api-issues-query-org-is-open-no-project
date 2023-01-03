@@ -1,4 +1,5 @@
 #!/bin/sh
+set -euf
 
 ##
 # Fetch all GitHub issues that are:
