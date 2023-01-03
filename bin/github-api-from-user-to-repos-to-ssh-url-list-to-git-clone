@@ -2,7 +2,8 @@
 set -euf
 
 github_api_from_user_to_repos() {
-	curl -s "https://api.github.com/users/$1/repos?per_page=9999"
+    user="$1"
+	curl -s "https://api.github.com/users/$user/repos?per_page=9999"
 }
 
 github_api_from_user_to_repos_to_ssh_url_list() {
@@ -20,11 +21,12 @@ do_user() {
 	cd "$pwd0"
 }
 
+
 if [ "$#" -eq 0 ]; then
-    echo "Syntax: github-api-from-user-to-repos-to-ssh-url-list-to-git-clone [user] ..."
+    echo "Syntax: github-api-from-user-to-repos-to-ssh-url-list-to-git-clone [github-user] ..."
+	exit 1
 fi
 
 for user in "$@"; do
 	do_user "$user"
 done
-
