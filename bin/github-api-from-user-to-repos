@@ -1,0 +1,21 @@
+#!/bin/sh
+set -euf
+
+github_api_from_user_to_repos() {
+    user="$1"
+	curl -s "https://api.github.com/users/$user/repos?per_page=9999"
+}
+
+do_user() {
+	user="$1"
+	github_api_from_user_to_repos "$user"
+}
+
+if [ "$#" -eq 0 ]; then
+    echo "Syntax: github-api-from-user-to-repos [github-user] ..."
+	exit 1
+fi
+
+for user in "$@"; do
+	do_user "$user"
+done
