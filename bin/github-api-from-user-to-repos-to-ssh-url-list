@@ -10,12 +10,17 @@ github_api_from_user_to_repos_to_ssh_url_list() {
 	jq -r '.[].ssh_url'
 }
 
-for user in "$@"; do
-	do_user "$user"
-done
-
-
 do_user() {
 	user="$1"
 	github_api_from_user_to_repos_to_ssh_url_list "$user"
 }
+
+if [ "$#" -eq 0 ]; then
+    echo "Syntax: github-api-from-user-to-repos-to-ssh-url-list [github-user] ..."
+	exit 1
+fi
+
+for user in "$@"; do
+	do_user "$user"
+done
+
