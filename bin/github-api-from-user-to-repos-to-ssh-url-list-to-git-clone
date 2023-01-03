@@ -10,15 +10,21 @@ github_api_from_user_to_repos_to_ssh_url_list() {
 	jq -r '.[].ssh_url'
 }
 
+do_user() {
+	user="$1"
+	mkdir -p "$user"
+	pwd0=$(pwd)
+	cd "$user"
+	github_api_from_user_to_repos_to_ssh_url_list "$user" |
+	xargs -I{} git clone {}
+	cd "$pwd0"
+}
+
+if [ "$#" -eq 0 ]; then
+    echo "Syntax: github-api-from-user-to-repos-to-ssh-url-list-to-git-clone [user] ..."
+fi
+
 for user in "$@"; do
 	do_user "$user"
 done
 
-do_user() {
-	user="$1"
-	mkdir -p "$user"
-	pushd "$user"
-	github_api_from_user_to_repos_to_ssh_url_list "$user" |
-	xargs -I{} git clone {}
-	popd
-}
