@@ -1,4 +1,4 @@
 #!/bin/sh
 test -f index.md && ln -s index.md README.md
 git add .
-git commit -m "Add $(basename "$(pwd)")"
+git commit -m "Add $(basename "$(pwd)")" .
