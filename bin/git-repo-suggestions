@@ -1,8 +1,8 @@
 #!/bin/sh
 set -euf
 
-# Include https://github.com/SixArm/posix-shell-script-kit
-. "$(dirname "$(readlink -f "$0")")/posix-shell-script-kit"
+# Include https://github.com/SixArm/unix-shell-script-kit
+. "$(dirname "$(readlink -f "$0")")/unix-shell-script-kit"
 
 update_git_repo(){
     git pull --ff-only > /dev/null
