@@ -1,40 +1,36 @@
 #!/bin/sh
-set -euf
 
+##
+# Provide git repo suggestions, such as for typical free open source software projects.
+#
+# This script looks for typical directories and files, such as README, LICENSE, CODEOWNERS, etc.
+#
+# You will probably want to customize this script for your own preferences.
+##
+
+set -euf
 # Include https://github.com/SixArm/unix-shell-script-kit
 . "$(dirname "$(readlink -f "$0")")/unix-shell-script-kit"
 
-update_git_repo(){
-    git pull --ff-only > /dev/null
-    git submodule update --init --recursive > /dev/null
-}
+out "This script provides suggestions for a git repository."
+out "For more help please see our link to GitHub special files and paths:"
+out "https://github.com/joelparkerhenderson/github-special-files-and-paths/"
+out ""
 
-vet_git_repo(){
-    test -x init || out "Suggestion: create executable file \"init\" in order for a new user to initialize the project."
-    test -f CODEOWNERS || out "Suggestion: create file \"CODEOWNERS\" in order to protect the repo from non-owners."
-    test -f .config || out "Suggestion: create directory \".config\" for repo configration files."
-    set +f
-    test -f LICENSE* && grep -q "GNU GENERAL PUBLIC LICENSE" LICENSE* && grep -q "Version 3, 29 June 2007" LICENSE && out "Suggestion: change license from GPL 3 to GPL 2 because it's better for more open source systemss."
-    set -f
-    for x in \
-	    README \
-	    LICENSE \
-	    CONTRIBUTING \
-	    CODE_OF_CONDUCT \
-	    .config/ISSUE_TEMPLATE \
-	    .config/PULL_REQUEST_TEMPLATE \
-	    .config/SECURITY
-    do
-	set +f
-	test -f $x* || out "Suggestion: create metadata file \"$x\" (or $x.md or $x.txt etc.)"
-	set -f
-    done
-}
-
-while read git_repo_path; do
-    out "$git_repo_path"
-    pushd "$git_repo_path"
-    update_git_repo
-    vet_git_repo
-    popd
-done
+test -f README.* || out "Suggestion: create file \"README.md\" or similar, that introduces the repo, and explains how to use it."
+test -f LICENSE.* || out "Suggestion: create file \"LICENSE.md\" or similar, that provides a legal license such as GPL, MIT, BSD, etc."
+test -f CHANGELOG.* || out "Suggestion: create file \"CHANGELOG.md\" or similar, to document changes to the project."
+test -f SECURITY.* || out "Suggestion: create file \"SECURITY.md\" or similar, to teach users to report security issues and do coordinated vulnerability disclosure (CVD)."
+test -f CONTRIBUTING.* || out "Suggestion: create file \"CONTRIBUTING.md\" or similar, to guide users how to contribute to the project."
+test -f CONTRIBUTORS.* || out "Suggestion: create file \"CONTRIBUTORS.md\" or similar, to list persons and organizations that are contributors to the project."
+test -f AUTHORS.* || out "Suggestion: create file \"AUTHORS.md\" or similar, to list persons and organizations that are authors of the project."
+test -f ACKNOWLEDGMENTS.* || out "Suggestion: create file \"ACKNOWLEDGMENTS.md\" or similar, to credit persons and organizations that are helping the project."
+test -f CODE_OF_CONDUCT.* || out "Suggestion: create file \"CODE_OF_CONDUCT.md\" or similar, to guide users how to participate to report security issues and do coordinated vulnerability disclosure (CVD)."
+test -f CITATION.cff.* || out "Suggestion: create file \"CITATION.cff\" or similar; this file explains how you would like people to cite your work."
+test -f Makefile || out "Suggestion: create file \"Makefile\" in order for a new user to run the command 'make'."
+test -f .config || out "Suggestion: create directory \".config\" for repo configuration files."
+test -f CODEOWNERS || out "Suggestion: create file \"CODEOWNERS\", to provide access control capabilities to the repo."
+test -f .github/ISSUE_TEMPLATE.* || out "Suggestion: create file \".github/ISSUE_TEMPLATE.md\" or similar for a GitHub issue template."
+test -f .github/PULL_REQUEST_TEMPLATE.* || out "Suggestion: create file \".github/PULL_REQUEST_TEMPLATE.md\" or similar for a GitHub pull request template."
+test -f .github/dependabot.yml || out "Suggestion: create file \".github/dependabot.yml\" to configure Dependabot automatic update tools for the repo."
+test -f .github/funding.yml || out "Suggestion: create file \".github/funding.yml\" to configure your sponsor button for your repo."
