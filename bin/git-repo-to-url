@@ -1,0 +1,5 @@
+#!/bin/sh
+set -euf
+config=${1:=.git/config}
+grep -m1 '^\turl = ' "$config" |
+sed 's/^\turl = git@github.com:/https:\/\/github.com\//; s/\.git$/\//'
