@@ -1,0 +1,13 @@
+#!/bin/sh
+set -euf
+
+# git-log-date-version-tsv-via-cargo-toml
+#
+# Print the date and version as tsv (tab separated values)
+# by parsing Cargo.toml to extract the version changes.
+
+git log --date=short --pretty=format:"%ad %h" -G '^version =' -- Cargo.toml |
+while read date hash; do
+    version=$(git show "$hash:Cargo.toml" | awk -F\" '/version =/ {print $2; exit;}')
+    printf "%s\t%s\n" "$date" "$version"
+done
